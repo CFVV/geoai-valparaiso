@@ -1,0 +1,18 @@
+# Dependencias reales de cambio_urbano/ e incendios/ (grep de imports en
+# pipeline/*.py y run_pipeline.py), pineadas a las versiones verificadas
+# corriendo ambos pipelines end-to-end (2026-07-14).
+
+numpy==1.26.4
+pandas==2.3.2
+geopandas==1.1.1
+shapely==2.1.1
+fiona==1.10.1
+pyproj==3.7.1
+rasterio==1.4.3
+joblib==1.5.2
+xgboost==3.2.0
+scikit-learn==1.7.1
+PyYAML==6.0.2
+earthengine-api==1.6.6
+geemap==0.36.2
+pytest==9.1.1

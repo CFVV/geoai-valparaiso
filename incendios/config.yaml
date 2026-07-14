@@ -1,0 +1,78 @@
+# =============================================================================
+# CONFIGURACIÓN — Pipeline de Recurrencia de Incendios (hexgrid MODIS 1985-2026)
+# =============================================================================
+# Este es el ÚNICO archivo que se debería editar para correr el pipeline con
+# un año nuevo. No es necesario tocar ningún script de pipeline/.
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Google Earth Engine
+# -----------------------------------------------------------------------------
+gee:
+  proyecto: "geoai-valparaiso"   # se usa SOLO si no está seteada la variable de entorno GEE_PROJECT
+  # El proyecto real usado en ejecución es: os.environ.get("GEE_PROJECT", gee.proyecto)
+  # La autenticación se hace vía `earthengine authenticate` en la máquina antes
+  # de correr el pipeline. Este script NO guarda credenciales.
+
+# -----------------------------------------------------------------------------
+# Años a cubrir
+# -----------------------------------------------------------------------------
+anios:
+  modis_inicio: 2018   # la capa base Miranda (hexGrid_200m_incendiosValpo.gpkg) ya cubre 1985-2017
+  fin: 2026              # último año a incluir — CAMBIAR ESTO cada nueva corrida
+  # Si "fin" es el año en curso, MODIS puede estar incompleto (ej. 2026 solo
+  # tiene datos ene-feb al momento de escribir esto). El pipeline lo detecta
+  # automáticamente y lo reporta en el log y en el nombre/metadata de salida.
+
+# -----------------------------------------------------------------------------
+# Área de interés
+# -----------------------------------------------------------------------------
+aoi:
+  poligono: "../comun/gdf_comunas.gpkg"   # mismo AOI usado por el pipeline original (Valparaíso/Concón/Viña/Quilpué/Villa Alemana); compartido con cambio_urbano/
+
+# -----------------------------------------------------------------------------
+# Hexgrid
+# -----------------------------------------------------------------------------
+hexgrid:
+  base_miranda: "hexGrid_200m_incendiosValpo.gpkg"
+  # ^ Capa base ESTÁTICA (Miranda et al., cicatrices de incendios 1985-2017).
+  #   NUNCA se recalcula ni se sobreescribe — es solo lectura. Ver docs/METODOLOGIA.md.
+  cellsize_m: 250
+  # CORRECCIÓN DE NOMBRE (ver docs/METODOLOGIA.md): el archivo histórico se llama
+  # "hexGrid_200m_..." pero el hexágono real mide 250 m de lado (confirmado por
+  # área exacta 162,379.76 m² = (3√3/2)·250² y por el código fuente original,
+  # fireScars.ipynb, que llama create_hexa_grid(cellsize_m=250)). El pipeline
+  # SIGUE LEYENDO desde el nombre histórico "200m" (no se renombra el archivo
+  # histórico) pero ESCRIBE la salida nueva con el nombre correcto "250m".
+
+# -----------------------------------------------------------------------------
+# MODIS (MCD64A1 — área quemada)
+# -----------------------------------------------------------------------------
+modis:
+  coleccion: "MODIS/061/MCD64A1"
+  banda: "BurnDate"
+  scale: 500
+
+# -----------------------------------------------------------------------------
+# Umbrales
+# -----------------------------------------------------------------------------
+umbrales:
+  dn_min: 0   # DN > dn_min = píxel quemado (BurnDate > 0)
+
+# -----------------------------------------------------------------------------
+# Rutas
+# -----------------------------------------------------------------------------
+rutas:
+  modis_tifs: "MODIS/"
+  # ^ Los TIFs ya descargados viven en MODIS/ (no se duplican). El nombre
+  #   normalizado esperado es MODIS_{AAAA}-{MM:02d}-01.tif.
+  salida: "outputs/"
+  entrega_gpkg: "outputs/hexGrid_250m_incendiosValpo_1985_{anio_fin}.gpkg"
+  entrega_geojson: "outputs/hexGrid_250m_incendiosValpo_1985_{anio_fin}.geojson"
+  log: "outputs/logs/log_ejecucion_{anio_fin}.txt"
+
+# -----------------------------------------------------------------------------
+# Ejecución
+# -----------------------------------------------------------------------------
+ejecucion:
+  saltar_descarga: false   # equivalente al flag --skip-descarga; usar si los TIFs MODIS ya están en disco

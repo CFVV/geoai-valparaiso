@@ -1,0 +1,104 @@
+# =============================================================================
+# CONFIGURACIÓN — Pipeline GeoAI Valparaíso
+# =============================================================================
+# Este es el ÚNICO archivo que se debería editar para correr el pipeline en un
+# año nuevo. No es necesario tocar ningún script de la carpeta pipeline/.
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Google Earth Engine
+# -----------------------------------------------------------------------------
+gee:
+  proyecto: "geoai-valparaiso"   # nombre del proyecto GEE registrado
+  # La autenticación se hace vía `earthengine authenticate` en la máquina antes
+  # de correr el pipeline. Este script NO guarda credenciales.
+
+# -----------------------------------------------------------------------------
+# Años a comparar
+# -----------------------------------------------------------------------------
+anios:
+  inicio: 2023        # año base de comparación (par delta_v2)
+  fin: 2025            # año más reciente a evaluar — CAMBIAR ESTO cada nueva corrida
+  # Si "fin" es el año en curso, el mosaico S2 puede estar incompleto
+  # (ej. 2026 solo tuvo datos ene-mar). El pipeline detecta esto automáticamente
+  # y lo reporta en el log y en los metadatos del entregable.
+
+# -----------------------------------------------------------------------------
+# Tiles de estudio (20 tiles prioritarios)
+# -----------------------------------------------------------------------------
+tiles:
+  - 12
+  - 13
+  - 19
+  - 20
+  - 21
+  - 27
+  - 28
+  - 29
+  - 35
+  - 36
+  - 37
+  - 38
+  - 39
+  - 44
+  - 45
+  - 46
+  - 47
+  - 52
+  - 53
+  - 54
+
+# -----------------------------------------------------------------------------
+# Modelo
+# -----------------------------------------------------------------------------
+modelo:
+  ruta: "models/model_xgb_norm_v2.pkl"
+  version_esperada: "v2"   # metadata["version"] real dentro de model_xgb_norm_v2.pkl (verificado); el nombre del archivo dice "norm_v2" pero la metadata interna solo dice "v2"
+
+# -----------------------------------------------------------------------------
+# Umbrales de detección (ver docs/METODOLOGIA.md para justificación)
+# -----------------------------------------------------------------------------
+umbrales:
+  delta_v2_deteccion: 0.070       # umbral principal cambio_reciente
+  frac_burnt_incendio: 0.30       # fracción quemada MODIS para excluir por incendio
+  frac_built_alerta: 0.10         # umbral mínimo LULC para categoría "Alerta de cambio"
+  # NOTA: a partir de 2026-07, confirmado_lulc y ambiguo_lulc se fusionaron en una
+  # sola categoría "Alerta de cambio" (ver docs/METODOLOGIA.md, sección validación
+  # ciega nb40) porque no se distinguían de forma confiable en validación visual.
+
+# -----------------------------------------------------------------------------
+# LULC (ESRI Global 10m Land Cover Time Series)
+# -----------------------------------------------------------------------------
+lulc:
+  gee_collection: "projects/sat-io/open-datasets/landcover/ESRI_Global-LULC_10m_TS"
+  anios_disponibles: [2020, 2022, 2023, 2024]   # actualizar si ESRI publica años nuevos
+  # Si "anios.fin" configurado arriba no tiene LULC publicado todavía, el pipeline
+  # usa automáticamente el año LULC disponible más reciente como proxy y genera
+  # una ALERTA explícita en el log y en los metadatos del GPKG/KMZ de salida.
+
+# -----------------------------------------------------------------------------
+# Filtro espacial
+# -----------------------------------------------------------------------------
+filtro_espacial:
+  poligono_comunal: "../comun/gdf_comunas.gpkg"   # filtro marítimo (centroide dentro de comuna); AOI compartido con incendios/
+
+# -----------------------------------------------------------------------------
+# Rutas de salida
+# -----------------------------------------------------------------------------
+rutas:
+  tiles_gpkg: "outputs/tiles_priority.gpkg"   # geometrías de los tiles prioritarios (referencia estática)
+  subtiles_gpkg: "outputs/subtiles_250m_change_classification.gpkg"   # grilla de subtiles 250m (solo se usa subtile_id/tile_id/geometry; las columnas de clasificación v1 heredadas NO se usan)
+  s2_mosaics: "s2_mosaics/"
+  inferencia: "outputs/inference/"
+  lulc: "lulc_io/"
+  burnt_area: "outputs/burnt_area/"
+  entrega_gpkg: "outputs/entrega/deteccion_{anio_fin}.gpkg"
+  entrega_kmz: "outputs/entrega/deteccion_{anio_fin}.kmz"
+  log: "outputs/logs/log_ejecucion_{anio_fin}.txt"
+
+# -----------------------------------------------------------------------------
+# Ejecución
+# -----------------------------------------------------------------------------
+ejecucion:
+  saltar_descarga: false   # equivalente a flag --skip-descarga; usar si S2 ya está en disco
+  saltar_lulc: false       # equivalente a flag --skip-lulc

@@ -1,0 +1,31 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Datos pesados / derivados (reproducibles vía GEE, no viven en git — ver DATOS.md)
+*.pkl
+*.tif
+*.tif.aux.xml
+cambio_urbano/s2_mosaics/
+cambio_urbano/lulc_io/
+cambio_urbano/outputs/
+incendios/MODIS/
+incendios/outputs/
+
+# NOTA: incendios/hexGrid_200m_incendiosValpo.gpkg (capa Miranda, 4.6 MB) NO se
+# excluye — es dato histórico NO reproducible (no viene de GEE ni de ningún
+# script) y debe quedar versionado en el repo. Ver DATOS.md.
+
+# Credenciales (ninguna vive en el repo hoy; regla defensiva)
+*credential*
+service_account*.json
+.env
+
+# Este repo es independiente de los árboles de trabajo originales — nunca deben
+# anidarse ni rastrearse aquí.
+geoai-valpo/
+MLxWildfires_valparaiso/
