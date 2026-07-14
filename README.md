@@ -74,12 +74,20 @@ año nuevo.
 - Este repo es **independiente** de `geoai-valpo/` y `MLxWildfires_valparaiso/`
   (los repos/carpetas de trabajo originales, que se dejaron intactos). No los
   referencia ni depende de ellos.
-- Pendiente: subir el modelo `.pkl` de cambio_urbano a un repositorio con DOI
-  (Zenodo u otro) — es el único dato NO reproducible que hoy vive solo
-  localmente. La capa Miranda (el otro dato NO reproducible) ya quedó
-  versionada en git. Ver `DATOS.md` para el detalle completo.
+- El modelo `.pkl` de cambio_urbano y la capa Miranda están respaldados en
+  Zenodo (DOI [10.5281/zenodo.21351448](https://doi.org/10.5281/zenodo.21351448))
+  — ver `DATOS.md` para el detalle completo de qué descargar y dónde colocarlo.
 
 ## Metodología
 
 - `cambio_urbano/`: ver [`cambio_urbano/docs/METODOLOGIA.md`](cambio_urbano/docs/METODOLOGIA.md).
 - `incendios/`: ver [`incendios/docs/METODOLOGIA.md`](incendios/docs/METODOLOGIA.md).
+
+## Cómo citar
+
+Si usas el modelo o los datos base de este proyecto, cita el dataset de
+Zenodo:
+
+> Vera Villa, C. & Aguirre, P. (2026). GeoAI Valparaíso - Modelo XGBoost v2 y
+> datos base para detección de cambio urbano e incendios [Dataset]. Zenodo.
+> https://doi.org/10.5281/zenodo.21351448

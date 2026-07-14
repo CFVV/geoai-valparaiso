@@ -13,13 +13,28 @@ pierden, se pierde el punto de partida del proyecto.
 | Dato | Ruta | Tamaño | Estado | Por qué no es reproducible |
 |---|---|---|---|---|
 | Capa base Miranda (cicatrices de incendios 1985-2017) | `incendios/hexGrid_200m_incendiosValpo.gpkg` | 4.6 MB | ✅ **versionada en git** (chica, se sube tal cual) | Recopilación histórica original (Miranda et al.); no se descarga de MODIS/GEE ni se recalcula — es un insumo externo al pipeline, ver `incendios/docs/METODOLOGIA.md` |
-| Modelo XGBoost en producción | `cambio_urbano/models/model_xgb_norm_v2.pkl` | 8.5 MB | ⚠️ **gitignorado — [PENDIENTE: subir a Zenodo/DOI]** | Resultado de un entrenamiento con dataset y normalización específicos (nb35, `geoai-valpo/wip-experiments/`); recrearlo requiere reconstruir el dataset de entrenamiento completo, no solo correr un script |
+| Modelo XGBoost en producción | `cambio_urbano/models/model_xgb_norm_v2.pkl` | 8.5 MB | ⚠️ gitignorado — ✅ **respaldado en Zenodo** (ver abajo) | Resultado de un entrenamiento con dataset y normalización específicos (nb35, `geoai-valpo/wip-experiments/`); recrearlo requiere reconstruir el dataset de entrenamiento completo, no solo correr un script |
 | Modelos archivados (v1, v3) | `cambio_urbano/models/model_xgb_2018_v1.pkl`, `model_xgb_norm_v3_lulc.pkl` | 7.7 MB + 8.2 MB | ⚠️ gitignorados — mismo caso que v2, menor prioridad (no están en producción) | Idem — archivados solo como referencia histórica de la comparación v1/v2/v3 |
 
-**Acción pendiente**: subir los `.pkl` (23 MB total) a un repositorio con DOI
-(Zenodo u otro) para que quien herede el proyecto (Randy) pueda obtenerlos
-sin re-entrenar. Hasta que eso se resuelva, viven localmente en
-`cambio_urbano/models/` en esta máquina.
+### Respaldo en Zenodo
+
+El modelo XGBoost en producción (`model_xgb_norm_v2.pkl`) y la capa base
+Miranda (`incendios/hexGrid_200m_incendiosValpo.gpkg` — ya versionada en
+este repo, pero también respaldada acá como copia de seguridad adicional)
+están depositados en Zenodo con DOI:
+
+**DOI:** https://doi.org/10.5281/zenodo.21351448
+
+**Cita:**
+> Vera Villa, C. & Aguirre, P. (2026). GeoAI Valparaíso - Modelo XGBoost v2 y
+> datos base para detección de cambio urbano e incendios [Dataset]. Zenodo.
+> https://doi.org/10.5281/zenodo.21351448
+
+**Instrucción de descarga**: bajar `model_xgb_norm_v2.pkl` desde
+https://doi.org/10.5281/zenodo.21351448 y colocarlo en
+`cambio_urbano/models/model_xgb_norm_v2.pkl` (crear la carpeta `models/` si
+no existe). Sin este archivo, `cambio_urbano/run_pipeline.py` no puede
+correr la etapa de inferencia.
 
 ## 2. Reproducibles — se regeneran o re-descargan, no se distribuyen
 
