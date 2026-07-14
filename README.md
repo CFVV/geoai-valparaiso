@@ -1,9 +1,8 @@
 # GeoAI Valparaíso
 
 Repo unificado de los dos pipelines de detección geoespacial desarrollados para
-la cuenca de Valparaíso (Fondecyt): expansión de asentamientos informales y
-recurrencia de incendios forestales. Este documento es la puerta de entrada
-para quien herede el proyecto.
+la cuenca de Valparaíso: expansión de asentamientos informales y
+recurrencia de incendios forestales.
 
 ## Estructura
 
@@ -22,7 +21,7 @@ geoai-valparaiso/
 │   ├── s2_mosaics/       # mosaicos Sentinel-2 (gitignored, ver DATOS.md)
 │   ├── lulc_io/          # LULC ESRI 10m (gitignored, ver DATOS.md)
 │   ├── outputs/          # resultados + caché de inferencia (gitignored)
-│   ├── tests/            # vacío — pendiente (ver Estado)
+│   ├── tests/            # vacío — validación extra futura
 │   └── docs/METODOLOGIA.md
 ├── incendios/           # recurrencia de incendios (hexgrid MODIS 1985-2026)
 │   ├── config.yaml
