@@ -90,3 +90,29 @@ Zenodo:
 > Vera Villa, C. & Aguirre, P. (2026). GeoAI Valparaíso - Modelo XGBoost v2 y
 > datos base para detección de cambio urbano e incendios [Dataset]. Zenodo.
 > https://doi.org/10.5281/zenodo.21351448
+
+### Fuentes de datos y atribución
+Capa histórica de recurrencia de incendios (1985–2017)
+El pipeline de incendios se construye a partir de una capa base histórica de cicatrices de incendios que no fue generada por este proyecto, sino que deriva de la Base de Datos de Cicatrices de Incendios de Chile (Landscape Fire Scars Database) de Miranda et al. La capa fue obtenida desde el portal Datos para Resiliencia (ITREND). Cualquier uso de los resultados de incendios de este proyecto debe citar las siguientes fuentes originales:
+
+#### Artículo metodológico:
+
+> Miranda, A., Mentler, R., Moletto-Lobos, Í., Alfaro, G., Aliaga, L., Balbontín, D., Barraza, M., Baumbach, S., Calderón, P., Cárdenas, F., Castillo, I., Contreras, G., de la Barra, F., Galleguillos, M., González, M. E.,
+>  Hormazábal, C., Lara, A., Mancilla, I., Muñoz, F., Oyarce, C., Pantoja, F., Ramírez, R., & Urrutia, V. (2022). The Landscape Fire Scars Database: mapping historical burned area and fire severity in Chile. Earth System Science
+> Data, 14(8), 3599–3613. https://doi.org/10.5194/essd-14-3599-2022
+
+#### Conjunto de datos original:
+
+> Miranda, A., Mentler, R., Moletto-Lobos, I., et al. (2022). Fire Scars: remotely sensed historical burned area and fire severity in Chile between 1984–2018 [Data set]. PANGAEA. https://doi.org/10.1594/PANGAEA.941127
+
+#### Fuente de descarga utilizada en este proyecto (Datos para Resiliencia / ITREND):
+
+> Miranda, A., Mentler, R., Moletto-Lobos, Í., et al. (2024). Cicatrices de incendios — Resumen (V3) [Data set]. Datos para Resiliencia (ITREND). https://doi.org/10.71578/XAZAKP
+
+### Otras fuentes de datos utilizadas
+- Sentinel-2 (Copernicus / ESA), vía Google Earth Engine.
+- MODIS MCD64A1 (NASA LP DAAC), producto de área quemada, vía Google Earth Engine.
+- ESRI 10m Land Cover Time Series, vía Google Earth Engine.
+- Catastro de campamentos de TECHO-Chile (usado como referencia de validación para el pipeline de cambio urbano).
+
+
