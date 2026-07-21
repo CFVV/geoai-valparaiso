@@ -1,8 +1,7 @@
-# Datos que NO están en git tracking normal
+# Datos que no están en git tracking normal
 
 Este repo versiona código, config y documentación. Los datos se dividen en
-dos categorías según si se pueden regenerar o no — esa distinción importa
-más que el tamaño a la hora de decidir dónde deben vivir.
+dos categorías según si se pueden regenerar o no,
 
 ## 1. NO reproducibles — requieren preservación permanente
 
@@ -50,18 +49,12 @@ subirlos a ningún repositorio de datos — están gitignorados y punto.
 | TIFs MODIS MCD64A1 (BurnDate) | `incendios/MODIS/MODIS_{AAAA}-{M}-01.tif` (+ `.gpkg` de polígonos por mes) | ~11.4 MB (110+110 archivos, 2017-2026) | `pipeline/descarga_modis.py` (GEE) |
 | Resultados + logs | `incendios/outputs/` | ~11 MB | corrida del propio pipeline |
 
-[PENDIENTE: definir ubicación de descarga] para quien clone el repo sin
-acceso a esta máquina — hoy estos archivos solo existen localmente,
-copiados desde `geoai-valpo/` y `MLxWildfires_valparaiso/` el 2026-07-14.
-No requieren almacenamiento permanente porque `--skip-descarga` es solo un
-atajo de conveniencia, no una dependencia real: sin ellos, el pipeline
-corre igual descargando de GEE desde cero.
 
 ## Compartido
 
 | Dato | Ruta | Tamaño | Notas |
 |---|---|---|---|
-| AOI (5 comunas) | `comun/gdf_comunas.gpkg` | ~848 KB | ✅ versionado en git (chico, base para ambos pipelines) |
+| AOI (5 comunas) | `comun/gdf_comunas.gpkg` | ~848 KB | ✅ versionado en git |
 
 ## Credenciales
 
