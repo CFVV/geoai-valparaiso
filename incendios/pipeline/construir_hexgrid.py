@@ -16,7 +16,8 @@ polígonos disjuntos (uno por valor de día contiguo) que se solapan con el
 mismo hexágono — en ese caso ese hexágono puede sumar más de +1 en un mismo
 mes. Esto NO es un bug: es el comportamiento real del pipeline original,
 verificado reproduciendo exactamente los totales de los entregables ya
-publicados (base=4562, 1985-2025=7796, 1985-2026=7830).
+publicados (base=4562, 1985-2025=7796, 1985-2026=7834 — corregido desde
+7830, ver docs/METODOLOGIA.md sección "Nota sobre el Nfires de referencia").
 
 IDEMPOTENCIA: esta función siempre parte de una copia fresca de la capa base
 de Miranda (nunca la muta) y reconstruye el acumulado completo leyendo los
@@ -39,7 +40,12 @@ import rasterio
 import rasterio.features
 from shapely.geometry import shape
 
-NOMBRE_TIF_RE = re.compile(r"MODIS_(\d{4})-(\d{1,2})-01\.tif$")
+NOMBRE_TIF_RE = re.compile(r"MODIS_(\d{4})-(\d{2})-01\.tif$")
+# Exige mes con 2 dígitos (convención normalizada, ver docs/METODOLOGIA.md). Un
+# archivo viejo sin cero a la izquierda (ej. MODIS_2018-1-01.tif) sería otro
+# nombre de archivo para el MISMO mes que uno ya normalizado — si el regex
+# aceptara ambos, _tifs_en_rango() los trataría como dos meses distintos y
+# construir() sumaría ese mes dos veces a Nfires (double counting silencioso).
 
 
 def _tifs_en_rango(carpeta_tifs: Path, anio_inicio: int, anio_fin: int) -> list[Path]:

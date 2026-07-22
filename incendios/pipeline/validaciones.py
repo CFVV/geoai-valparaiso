@@ -17,7 +17,10 @@ from pathlib import Path
 
 import geopandas as gpd
 
-NOMBRE_TIF_RE = re.compile(r"MODIS_(\d{4})-(\d{1,2})-01\.tif$")
+NOMBRE_TIF_RE = re.compile(r"MODIS_(\d{4})-(\d{2})-01\.tif$")
+# Mismo regex que pipeline/construir_hexgrid.py — debe exigir 2 dígitos para
+# no perder de vista archivos con nombre viejo (sin cero) al reportar meses
+# faltantes, y para no contarlos como "presentes" bajo una clave distinta.
 
 
 def verificar_capa_base(cfg: dict) -> None:

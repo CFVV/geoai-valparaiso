@@ -66,7 +66,8 @@ año nuevo.
 - **incendios/**: código completo y funcional, con 1 test de idempotencia
   (PASSED) y documentación (`README.md`, `docs/METODOLOGIA.md`) ya
   incluidos. Verificado con `--skip-descarga` → Nfires total 1985-2026 =
-  7,830.
+  7,834 (corregido desde 7,830 — ver `docs/METODOLOGIA.md`, sección
+  "Nota sobre el Nfires de referencia").
 - Ambos pipelines comparten `comun/logger.py` (idéntico en ambos orígenes) y
   `comun/gdf_comunas.gpkg` (mismo AOI, verificado geométrica y
   atributivamente idéntico entre ambos orígenes).

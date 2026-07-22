@@ -57,11 +57,41 @@ entregables ya publicados:
 |---|---|
 | Base Miranda (1985-2017) | 4,562 |
 | 1985-2025 | 7,796 |
-| 1985-2026 (parcial, ene-feb) | 7,830 |
+| 1985-2026 (parcial, ene-feb) | 7,830 (histórico — corregido a 7,834, ver nota abajo) |
 
 La celda 7 del mismo notebook (`match.at[i,'Nfires']=1`) corre **después**
 del export (celda 6) y no tiene efecto en ningún entregable — es código
 abandonado, no se porta.
+
+### Nota sobre el Nfires de referencia: 7,834 (no 7,830)
+
+El valor 7,830 (1985-2026, parcial ene-feb) fue el primer total reproducido
+con el pipeline nuevo, pero estaba **subcontado en 1 píxel MODIS / 4
+hexágonos**. Causa: el script exploratorio original
+(`codes/1.MODIS_download_burntArea.ipynb`) descargaba cada TIF mensual con un
+ROI (`ee.Geometry.Rectangle`) que nunca quedó documentado ni atado al AOI
+oficial — cubría de más hacia el oeste/sur pero **no llegaba a cubrir el
+borde este del AOI actual** (`comun/gdf_comunas.gpkg` disuelto), por una
+franja de ~870 m.
+
+`pipeline/descarga_modis.py` (el módulo de producción) calcula el ROI
+directamente desde `aoi.to_crs(4326).total_bounds`, así que cubre el AOI
+completo. Al re-descargar el histórico con este pipeline se detectó que el
+mes **2019-07** tenía en esa franja este un píxel `BurnDate` legítimo
+(DN=188, día juliano 188 = 7 de julio de 2019) que el ROI viejo nunca pidió a
+GEE. Ese píxel intersecta 4 hexágonos que antes daban `Nfires=0` y ahora dan
+`Nfires=1`. Se verificó que es un caso aislado: de 45 meses re-descargados
+con ambos ROI (viejo y nuevo) para comparar, solo 2019-07 tiene esta
+diferencia; los otros 44 son pixel-idénticos en la zona de solape.
+
+**El valor de referencia correcto y reproducible con el pipeline actual es
+Nfires = 7,834** (1985-2026, parcial ene-feb). El archivo `MODIS/` en disco
+quedó normalizado: todos los TIFs usan el ROI completo (calculado desde el
+AOI actual), sin remanentes del ROI viejo.
+
+Nota aparte: el corte 1985-2025 (7,796) no se recalculó — si se necesita ese
+entregable a futuro, debería re-verificarse por el mismo motivo (2019 cae
+dentro de ese rango).
 
 ## Correcciones respecto al código original
 
