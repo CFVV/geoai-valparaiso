@@ -11,16 +11,16 @@ confirmados — ver sección 4).
 
 ## 1. Objetivo
 
-Este pipeline complementa el cadastre en terreno de TECHO-Chile mediante un
+Este pipeline complementa catastros en terreno de TECHO-Chile mediante un
 sistema de alerta temprana satelital: detecta zonas con cambio espectral
 compatible con construcción/urbanización reciente, para priorizar dónde
-dirigir esfuerzo de validación en terreno — no reemplaza el cadastre, lo hace
+dirigir esfuerzo de validación en terreno — no reemplaza el catastro, lo hace
 más eficiente. Nota sobre el nombre: el módulo se llama `cambio_urbano` y no
-"campamentos" a propósito, porque el pipeline no puede confirmar por sí solo
+"campamentos" a propósito, dado que el pipeline no puede confirmar por sí solo
 que un cambio detectado sea un campamento (podría ser obra formal u otra
 construcción); esa determinación la hace la validación visual o el trabajo de
-campo posterior. El cadastre de TECHO usado como ground-truth de validación,
-en cambio, sí corresponde a campamentos reales.
+campo posterior. El catastro de TECHO usado como ground-truth de validación,
+en cambio, sí corresponde a campamentos reales, aunque no necesariamente actualizados dada la complejidad de esa tarea.
 
 ---
 
@@ -116,9 +116,9 @@ un año completo.
 La precisión "cruda" del pipeline es estructuralmente baja (~12% incluso en
 el subset de mayor confianza). **Esto es esperado y aceptable dado el diseño
 del sistema**: el objetivo no es reemplazar la validación en terreno, sino
-**priorizar dónde TECHO/Gobierno Regional dirigen ese esfuerzo limitado**. Un
-sistema que reduce el área de búsqueda ~9× sigue siendo enormemente útil
-aunque la mayoría de sus alertas individuales terminen siendo falsos
+**priorizar dónde profesionales en terreno dirigen ese esfuerzo limitado**. Un
+sistema que reduce el área de búsqueda ~9× sigue siendo  útil
+aunque alertas individuales puedan ser falsos
 positivos en terreno — el valor está en la eficiencia de priorización, no en
 la exactitud caso por caso.
 
@@ -131,25 +131,12 @@ la exactitud caso por caso.
 `confirmado_lulc`, 15 `ambiguo_lulc`, 10 `suprimido_lulc`), IDs anonimizados
 y reordenados con un seed distinto (SEED_ID=99) para blinding. Tres
 evaluadores puntuaron independientemente sin acceso a la categoría real del
-pipeline: Camila, Paula, y un tercer evaluador (Nacho).
+pipeline.
 
-### 5.2 Exclusión de un evaluador
-El tercer evaluador (Nacho) mostró concordancia débil con los otros dos
-(kappa Nacho-Paula = 0.166, kappa Nacho-Cami = 0.303 — vs. Paula-Cami =
-0.560). Se excluyó de las conclusiones cuantitativas de la validación,
-manteniéndolo solo como referencia. *(Pendiente: entender la causa de esa
-discrepancia — ver sección 8.)*
-
-### 5.3 Resultado
-- Acuerdo Paula-Cami: 72.5% (29/40), kappa = 0.560 (moderado)
+### 5.2 Resultado
+- Acuerdo evaluador1-evaluador2: 72.5% (29/40), kappa = 0.560 (moderado)
 - 11 casos en desacuerdo, revisados individualmente
-- Cruce contra `categoria_real` del pipeline: ver sección 2.5 y notebook
-  `nb42_reporte_validacion_ciega.ipynb`
-
-### 5.4 Documento de reporte
-El notebook `wip-experiments/nb42_reporte_validacion_ciega.ipynb` recalcula
-esta validación de forma reproducible (no hardcodea números salvo las
-métricas históricas ya cerradas) y exporta un resumen de 2 páginas en PDF.
+- Cruce contra `categoria_real` del pipeline: ver sección 2.5
 
 ---
 
@@ -168,17 +155,8 @@ Todos los parámetros (años, tiles, umbrales, proyecto GEE) se editan en
 `config.yaml` — no requiere tocar código.
 
 ### 6.1 Proyecto GEE
-El proyecto de Google Earth Engine no está hardcodeado en el repo, para que
-no quede amarrado a la cuenta de una sola persona. Cada usuario define el
-suyo mediante la variable de entorno `GEE_PROJECT` (ver README, paso 3).
-El pipeline resuelve el proyecto en este orden: (1) variable de entorno
-`GEE_PROJECT`, (2) `gee.proyecto` en `config.yaml` si se prefiere fijarlo
-ahí. Si ninguno está definido, el pipeline se detiene con un mensaje claro
-antes de intentar conectarse a GEE.
-
-**Pendiente no bloqueante**: evaluar crear un proyecto GCP dedicado al
-proyecto GeoAI Valparaíso para entrega institucional (requiere setup de
-facturación/roles, fuera del alcance del pipeline en sí).
+El proyecto de Google Earth Engine `GEE_PROJECT`corresponde a `sirval-geoai`, el
+cual ya está configurado en el repo.
 
 ---
 
@@ -187,16 +165,16 @@ facturación/roles, fuera del alcance del pipeline en sí).
 - Precisión estructuralmente baja (ver sección 4) — no debe interpretarse
   como sistema de detección exacta, sino de priorización.
 - Recall relativamente bajo (14.5% @ 25m) — el pipeline no captura todos los
-  campamentos nuevos; complementa, no reemplaza, el cadastre de campo.
+  campamentos nuevos; complementa, no reemplaza, el trabajo de campo.
 - Cobertura LULC limitada a los años publicados por ESRI (2020, 2022, 2023,
   2024 al momento de escribir esto); años posteriores usan proxy (ver 2.6).
 - **Falsos positivos por cuerpos de agua interiores y cicatrices de incendio
   (limitación conocida, bajo revisión):** en la validación ciega, cuatro
-  casos (V03, V32, V36, V37) recibieron notas de una evaluadora señalando
+  casos (V03, V32, V36, V37) recibieron notas de evaluación señalando
   posibles artefactos por incendio o cambio en cuerpos de agua (ej. embalses
   o lagunas que suben/bajan de nivel entre años). El pipeline tiene filtro de
-  incendio (MODIS), pero **no tiene un filtro dedicado para cuerpos de agua
-  interiores** — el filtro marítimo actual solo excluye por límite comunal, no
+  incendio (MODIS), pero no tiene un filtro dedicado para cuerpos de agua
+  interiores — el filtro marítimo actual solo excluye por límite comunal, no
   masas de agua dentro del territorio. Un cambio espectral por variación de
   nivel de agua puede confundirse con cambio de construcción. No se ha
   cuantificado aún la magnitud de este efecto; queda como revisión abierta
@@ -206,30 +184,3 @@ facturación/roles, fuera del alcance del pipeline en sí).
 
 ---
 
-## 8. Pendientes
-
-1. **Cuantificar el efecto de cuerpos de agua interiores** (ver sección 7).
-   Los casos V03, V32, V36, V37 motivaron documentar esta limitación; queda
-   pendiente medir cuántas alertas caen sobre o cerca de masas de agua
-   conocidas, y evaluar si amerita un filtro dedicado (ej. excluir por
-   intersección con capa hidrográfica de la DGA/IDE Chile) o basta con la
-   revisión visual como mitigación.
-2. Entender causa de la baja concordancia del tercer evaluador (Nacho) —
-   ¿calibración de criterio, contexto insuficiente, u otro factor?
-3. Confirmar si vale la pena crear un proyecto GCP dedicado (sección 6.1).
-4. [Espacio para hallazgos adicionales de futuras iteraciones]
-
----
-
-## 9. Referencias internas
-
-- `CLAUDE.md` — contexto completo de sesiones de desarrollo (Claude Code)
-- `wip-experiments/nb36_aplicacion_modelo_v2.ipynb` — inferencia
-- `wip-experiments/nb38_lulc_postprocesamiento.ipynb` — lógica LULC original
-  (3 categorías; ver sección 2.5 para el cambio a 2)
-- `wip-experiments/nb40_metricas_finales.ipynb` — métricas finales y muestra
-  de validación ciega (F-1/F-2/F-2b)
-- `wip-experiments/nb42_reporte_validacion_ciega.ipynb` — reporte
-  reproducible de validación
-- `wip-experiments/outputs/validacion_muestra/categoria_mapping.csv` — mapeo
-  interno de la validación ciega (no compartir durante sesiones de scoring)
