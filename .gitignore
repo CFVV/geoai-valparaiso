@@ -1,6 +1,10 @@
 # macOS
 .DS_Store
 
+# Bitácora local de Claude Code (contexto de desarrollo/traspaso, NO es
+# documentación pública del proyecto — vive solo en disco, nunca en git)
+CLAUDE.md
+
 # Python
 __pycache__/
 *.pyc
