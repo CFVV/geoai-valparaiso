@@ -1,8 +1,13 @@
 # GeoAI Valparaíso
 
 Repo unificado de los dos pipelines de detección geoespacial desarrollados para
-la cuenca de Valparaíso: expansión de asentamientos informales y
-recurrencia de incendios forestales.
+la cuenca de Valparaíso: **expansión de asentamientos informales y
+recurrencia de incendios forestales.**
+
+El resultado de este proyecto es parte de la **plataforma SIRVAL**. La cual comprende un sistema computacional de acceso público orientado a distintos niveles de usuario, especialmente tomadores de decisión, con el objetivo de dar soporte a análisis preliminares de riesgo en el territorio de las comunas del Gran Valparaíso. Para ello integra datos georreferenciados de exposición y expansión urbana (formal e informal) con registros históricos y modelamiento de amenazas naturales como terremotos, tsunamis, incendios forestales y remociones en masa, generados a partir del análisis automatizado de cartografía histórica, imágenes satelitales y aerofotogrametría por dron, en constante actualización. 
+
+**SIRVAL** permite el monitoreo continuo del riesgo territorial y de esta manera dar soporte tanto a la planificación territorial como la gestión del riesgo y la emergencia en el Gran Valparaíso.
+[Plataforma SIRVAL](https://experience.arcgis.com/experience/771e1d79452f40a8ace331fdcb841dad/page/P%C3%A1gina)
 
 ## Estructura
 
@@ -33,7 +38,7 @@ geoai-valparaiso/
 │   ├── tests/
 │   ├── docs/
 │   └── README.md
-├── docs/                # guía de traspaso general (pendiente)
+├── docs/                # guía de traspaso 
 ├── DATOS.md             # dónde viven los datos que no están en git
 ├── requirements.txt     # instalación vía pip (Mac/Linux)
 ├── environment.yml      # instalación vía conda (recomendada en Windows)
@@ -86,8 +91,8 @@ año nuevo.
 
 - **cambio_urbano/**: código completo y funcional, verificado con
   `--skip-descarga --skip-lulc` → 222 "Alerta de cambio" generadas.
-  `README.md` y `docs/METODOLOGIA.md` ya incluidos. **No tiene tests
-  todavía** — la carpeta `tests/` quedó vacía (con `.gitkeep`), pendiente.
+  `README.md` y `docs/METODOLOGIA.md` ya incluidos. No se incluyen  tests,
+   la carpeta `tests/` quedó vacía (con `.gitkeep`), pendiente.
 - **incendios/**: código completo y funcional, con 1 test de idempotencia
   (PASSED) y documentación (`README.md`, `docs/METODOLOGIA.md`) ya
   incluidos. Verificado con `--skip-descarga` → Nfires total 1985-2026 =
@@ -96,8 +101,7 @@ año nuevo.
 - Ambos pipelines comparten `comun/logger.py` (idéntico en ambos orígenes) y
   `comun/gdf_comunas.gpkg` (mismo AOI, verificado geométrica y
   atributivamente idéntico entre ambos orígenes).
-- Este repo es **independiente** de `geoai-valpo/` y `MLxWildfires_valparaiso/`
-  (los repos/carpetas de trabajo originales, que se dejaron intactos). No los
+- Este repo es **independiente** de los códugos de desarrollo y trabajo originales. No los
   referencia ni depende de ellos.
 - El modelo `.pkl` de cambio_urbano y la capa Miranda están respaldados en
   Zenodo (DOI [10.5281/zenodo.21351448](https://doi.org/10.5281/zenodo.21351448))
