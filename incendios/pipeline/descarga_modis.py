@@ -15,7 +15,6 @@ correcciones sobre el original:
    el mismo mes. Acá el nombre siempre es MODIS_{AAAA}-{MM:02d}-01.tif.
 """
 
-import os
 from pathlib import Path
 
 
@@ -44,8 +43,9 @@ def descargar(cfg: dict, log) -> dict:
     import geemap
     import geopandas as gpd
 
-    proyecto = os.environ.get("GEE_PROJECT", cfg["gee"]["proyecto"])
-    ee.Initialize(project=proyecto)
+    from comun.gee_utils import resolver_proyecto_gee
+
+    ee.Initialize(project=resolver_proyecto_gee(cfg))
 
     aoi = gpd.read_file(cfg["aoi"]["poligono"]).dissolve()
     fc = geemap.geopandas_to_ee(aoi)

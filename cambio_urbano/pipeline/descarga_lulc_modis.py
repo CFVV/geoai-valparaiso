@@ -119,7 +119,9 @@ def descargar(cfg: dict, log) -> dict:
     else:
         anio_lulc_usado = max(anios_disp)
 
-    ee.Initialize(project=cfg["gee"]["proyecto"])
+    from comun.gee_utils import resolver_proyecto_gee
+
+    ee.Initialize(project=resolver_proyecto_gee(cfg))
 
     tiles_gdf_4326 = gpd.read_file(cfg["rutas"]["tiles_gpkg"]).to_crs("EPSG:4326")
     tiles_gdf_4326 = tiles_gdf_4326[tiles_gdf_4326["tile_id"].astype(int).isin(set(cfg["tiles"]))]

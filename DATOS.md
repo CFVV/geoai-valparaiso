@@ -14,6 +14,8 @@ pierden, se pierde el punto de partida del proyecto.
 | Capa base Miranda (cicatrices de incendios 1985-2017) | `incendios/hexGrid_200m_incendiosValpo.gpkg` | 4.6 MB | ✅ **versionada en git** (chica, se sube tal cual) | Recopilación histórica original (Miranda et al.); no se descarga de MODIS/GEE ni se recalcula — es un insumo externo al pipeline, ver `incendios/docs/METODOLOGIA.md` |
 | Modelo XGBoost en producción | `cambio_urbano/models/model_xgb_norm_v2.pkl` | 8.5 MB | ⚠️ gitignorado — ✅ **respaldado en Zenodo** (ver abajo) | Resultado de un entrenamiento con dataset y normalización específicos (nb35, `geoai-valpo/wip-experiments/`); recrearlo requiere reconstruir el dataset de entrenamiento completo, no solo correr un script |
 | Modelos archivados (v1, v3) | `cambio_urbano/models/model_xgb_2018_v1.pkl`, `model_xgb_norm_v3_lulc.pkl` | 7.7 MB + 8.2 MB | ⚠️ gitignorados — mismo caso que v2, menor prioridad (no están en producción) | Idem — archivados solo como referencia histórica de la comparación v1/v2/v3 |
+| Tiles prioritarios (geometrías) | `cambio_urbano/data/tiles_priority.gpkg` | 308 KB | ✅ **versionada en git** | Generado por un notebook exploratorio, no por el pipeline; sin él `run_pipeline.py` no puede ni empezar a descargar (necesita las geometrías de los 20 tiles) |
+| Grilla de subtiles 250m | `cambio_urbano/data/subtiles_250m_change_classification.gpkg` | 2.9 MB | ✅ **versionada en git** | Idem — grilla estática de subtiles (solo se usan `subtile_id`/`tile_id`/`geometry`); no se recalcula en cada corrida |
 
 ### Respaldo en Zenodo
 

@@ -1,6 +1,10 @@
 # Dependencias reales de cambio_urbano/ e incendios/ (grep de imports en
 # pipeline/*.py y run_pipeline.py), pineadas a las versiones verificadas
 # corriendo ambos pipelines end-to-end (2026-07-14).
+#
+# En Windows, pip suele fallar compilando GDAL (dependencia de geopandas/
+# rasterio/fiona/pyproj). Se recomienda usar environment.yml (conda) en su
+# lugar — ver README.md, sección "Instalación".
 
 numpy==1.26.4
 pandas==2.3.2

@@ -20,6 +20,12 @@ incendios/outputs/
 # excluye — es dato histórico NO reproducible (no viene de GEE ni de ningún
 # script) y debe quedar versionado en el repo. Ver DATOS.md.
 
+# NOTA: cambio_urbano/data/tiles_priority.gpkg y
+# cambio_urbano/data/subtiles_250m_change_classification.gpkg NO se excluyen
+# — los generó un notebook exploratorio (no el pipeline) y no son
+# reproducibles corriendo run_pipeline.py. Sin ellos el pipeline no arranca
+# desde un clon limpio. Deben quedar versionados. Ver DATOS.md.
+
 # Credenciales (ninguna vive en el repo hoy; regla defensiva)
 *credential*
 service_account*.json

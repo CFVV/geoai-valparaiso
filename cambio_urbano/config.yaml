@@ -9,7 +9,9 @@
 # Google Earth Engine
 # -----------------------------------------------------------------------------
 gee:
-  proyecto: "geoai-valparaiso"   # nombre del proyecto GEE registrado
+  proyecto: "geoai-valparaiso"   # se usa SOLO si no está seteada la variable de entorno GEE_PROJECT
+  # El proyecto real usado en ejecución lo resuelve comun/gee_utils.py:resolver_proyecto_gee()
+  # (prioriza GEE_PROJECT, cae a gee.proyecto). Compartido con incendios/.
   # La autenticación se hace vía `earthengine authenticate` en la máquina antes
   # de correr el pipeline. Este script NO guarda credenciales.
 
@@ -86,8 +88,8 @@ filtro_espacial:
 # Rutas de salida
 # -----------------------------------------------------------------------------
 rutas:
-  tiles_gpkg: "outputs/tiles_priority.gpkg"   # geometrías de los tiles prioritarios (referencia estática)
-  subtiles_gpkg: "outputs/subtiles_250m_change_classification.gpkg"   # grilla de subtiles 250m (solo se usa subtile_id/tile_id/geometry; las columnas de clasificación v1 heredadas NO se usan)
+  tiles_gpkg: "data/tiles_priority.gpkg"   # geometrías de los tiles prioritarios (referencia estática, NO reproducible — versionado en git, ver DATOS.md)
+  subtiles_gpkg: "data/subtiles_250m_change_classification.gpkg"   # grilla de subtiles 250m (solo se usa subtile_id/tile_id/geometry; las columnas de clasificación v1 heredadas NO se usan). NO reproducible — versionado en git, ver DATOS.md
   s2_mosaics: "s2_mosaics/"
   inferencia: "outputs/inference/"
   lulc: "lulc_io/"

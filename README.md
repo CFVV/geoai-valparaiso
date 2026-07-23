@@ -35,9 +35,34 @@ geoai-valparaiso/
 │   └── README.md
 ├── docs/                # guía de traspaso general (pendiente)
 ├── DATOS.md             # dónde viven los datos que no están en git
-├── requirements.txt
+├── requirements.txt     # instalación vía pip (Mac/Linux)
+├── environment.yml      # instalación vía conda (recomendada en Windows)
 └── .gitignore
 ```
+
+## Instalación
+
+**Mac/Linux:**
+```bash
+pip install -r requirements.txt
+```
+
+**Windows:** el stack geoespacial (`geopandas`/`rasterio`/`fiona`/`pyproj`, que
+dependen de GDAL) suele fallar al compilar vía pip. Se recomienda conda:
+```bash
+conda env create -f environment.yml
+conda activate sirval
+```
+`environment.yml` fija `python=3.10` (Anaconda instala 3.13 por defecto, que
+puede dar problemas con el stack geoespacial) y trae el stack geoespacial
+precompilado desde `conda-forge`, evitando la compilación de GDAL.
+
+En Mac/Linux también se puede usar `environment.yml` si se prefiere conda a
+pip — funciona igual en las tres plataformas.
+
+**Importante en cualquier plataforma con conda**: hay que activar el entorno
+(`conda activate sirval`) en **cada terminal nueva** antes de correr los
+pipelines — no queda activado permanentemente.
 
 ## Cómo correr cada pipeline
 

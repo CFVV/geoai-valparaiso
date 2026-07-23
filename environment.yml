@@ -1,0 +1,35 @@
+# Instalación vía conda — recomendada en Windows, donde pip + GDAL (motor de
+# geopandas/rasterio/fiona/pyproj) suele fallar al compilar. conda-forge trae
+# binarios GDAL precompilados, evitando ese problema.
+#
+# Uso:
+#   conda env create -f environment.yml
+#   conda activate sirval
+#
+# Mismas versiones que requirements.txt (pineadas 2026-07-14) donde conda-forge
+# las tiene disponibles. earthengine-api y geemap quedan en la sección `pip:`
+# porque ambos lanzan versiones nuevas más seguido de lo que conda-forge
+# empaqueta, y así se instala exactamente la versión pineada en vez de la
+# más reciente que conda-forge tenga resuelta.
+name: sirval
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10   # Anaconda por defecto instala 3.13; el stack geoespacial
+                   # (geopandas/rasterio/fiona/pyproj) se probó con 3.10
+  - geopandas=1.1.1
+  - rasterio=1.4.3
+  - fiona=1.10.1
+  - pyproj=3.7.1
+  - shapely=2.1.1
+  - numpy=1.26.4
+  - pandas=2.3.2
+  - scikit-learn=1.7.1
+  - xgboost=3.2.0
+  - joblib=1.5.2
+  - pyyaml=6.0.2
+  - pytest=9.1.1
+  - pip
+  - pip:
+      - earthengine-api==1.6.6
+      - geemap==0.36.2

@@ -10,7 +10,8 @@
 # -----------------------------------------------------------------------------
 gee:
   proyecto: "geoai-valparaiso"   # se usa SOLO si no está seteada la variable de entorno GEE_PROJECT
-  # El proyecto real usado en ejecución es: os.environ.get("GEE_PROJECT", gee.proyecto)
+  # El proyecto real usado en ejecución lo resuelve comun/gee_utils.py:resolver_proyecto_gee()
+  # (prioriza GEE_PROJECT, cae a gee.proyecto). Compartido con cambio_urbano/.
   # La autenticación se hace vía `earthengine authenticate` en la máquina antes
   # de correr el pipeline. Este script NO guarda credenciales.
 
