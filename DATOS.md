@@ -16,6 +16,8 @@ pierden, se pierde el punto de partida del proyecto.
 | Modelos archivados (v1, v3) | `cambio_urbano/models/model_xgb_2018_v1.pkl`, `model_xgb_norm_v3_lulc.pkl` | 7.7 MB + 8.2 MB | ⚠️ gitignorados — mismo caso que v2, menor prioridad (no están en producción) | archivados solo como referencia histórica de la comparación v1/v2/v3 |
 | Tiles prioritarios (geometrías) | `cambio_urbano/data/tiles_priority.gpkg` | 308 KB | ✅ **versionada en git** | Generado en desarrollo, no por el pipeline; sin él `run_pipeline.py` no puede funcionar (necesita las geometrías de los 20 tiles) |
 | Grilla de subtiles 250m | `cambio_urbano/data/subtiles_250m_change_classification.gpkg` | 2.9 MB | ✅ **versionada en git** | Grilla estática de subtiles (solo se usan `subtile_id`/`tile_id`/`geometry`); no se recalcula en cada corrida |
+| Checkpoint fine-tuned de RoofNet (`best_clip_model_balanced.pth`) | `experiments/phase2-drone-vulnerability/roofnet-eval/scripts/roofnet_finetuned.pth` (symlink local) | 1.7 GB | ⚠️ gitignorado — **NO redistribuible, sin respaldo en Zenodo** (ver nota abajo) | Checkpoint de terceros (no entrenado por este proyecto); publicado por el equipo RoofNet (`Climate-Energy-and-Risk-Analytics-Lab/RoofNet` v1.0) únicamente vía un dataset de Kaggle (`kaggle.com/datasets/doubleblindreview/xbd-roof-images`) bajo licencia **xBD CC-BY-NC-SA (no comercial)** y cuenta double-blind-review; no se puede regenerar ni redistribuir desde este repo |
+| Metadata de referencia RoofNet (`roofnet_metadata.csv`) | `experiments/phase2-drone-vulnerability/roofnet-eval/scripts/roofnet_metadata.csv` | 14 MB | ⚠️ gitignorado — dato de terceros | Metadata del dataset RoofNet (49.663 filas, ciudad/material/coordenadas), vendorizado dentro de los clones `roofnet/`/`roofnet_new/` (tampoco versionados, ver `roofnet-eval/FINDINGS.md` §12); no generado por este proyecto |
 
 ### Respaldo en Zenodo
 
@@ -36,6 +38,20 @@ https://doi.org/10.5281/zenodo.21351448 y colocarlo en
 `cambio_urbano/models/model_xgb_norm_v2.pkl` (crear la carpeta `models/` si
 no existe). Sin este archivo, `cambio_urbano/run_pipeline.py` no puede
 correr la etapa de inferencia.
+
+### Por qué el checkpoint de RoofNet NO tiene el mismo tratamiento
+
+A diferencia del modelo XGBoost (propiedad de este proyecto, por eso se
+puede respaldar libremente en Zenodo), el checkpoint fine-tuned de RoofNet
+(`best_clip_model_balanced.pth`) es de un tercero y está licenciado
+**xBD CC-BY-NC-SA (no comercial)**, distribuido solo vía un dataset de
+Kaggle bajo cuenta double-blind-review. Redistribuirlo — incluso como
+respaldo en Zenodo, incluso vía Git LFS — probablemente viola esos
+términos, además de que este repo es público. Se mantiene **solo local**
+(ver tabla arriba y `experiments/phase2-drone-vulnerability/roofnet-eval/FINDINGS.md`
+§1/§1a). Quien quiera reproducir la evaluación con el checkpoint real debe
+obtenerlo directamente desde Kaggle con su propia cuenta y aceptar los
+términos xBD.
 
 ## 2. Reproducibles — se regeneran o re-descargan, no se distribuyen
 

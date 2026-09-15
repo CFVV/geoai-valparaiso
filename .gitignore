@@ -35,6 +35,15 @@ incendios/outputs/
 service_account*.json
 .env
 
+# RoofNet: checkpoint fine-tuned (1.7 GB, licencia xBD CC-BY-NC-SA no comercial,
+# distribuido solo vía Kaggle con cuenta double-blind-review — no redistribuible
+# desde este repo público) y su cache de RemoteCLIP (auto-descargado de HF).
+# roofnet_finetuned.pth es un symlink local a ~/Documents/CIGIDEN/Roofnet/ —
+# ver roofnet-eval/FINDINGS.md sección 1.
+experiments/phase2-drone-vulnerability/roofnet-eval/scripts/roofnet_finetuned.pth
+experiments/phase2-drone-vulnerability/roofnet-eval/scripts/checkpoints/
+experiments/phase2-drone-vulnerability/roofnet-eval/scripts/roofnet_metadata.csv
+
 # Este repo es independiente de los árboles de trabajo originales — nunca deben
 # anidarse ni rastrearse aquí.
 geoai-valpo/
