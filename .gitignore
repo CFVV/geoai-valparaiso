@@ -44,6 +44,13 @@ experiments/phase2-drone-vulnerability/roofnet-eval/scripts/roofnet_finetuned.pt
 experiments/phase2-drone-vulnerability/roofnet-eval/scripts/checkpoints/
 experiments/phase2-drone-vulnerability/roofnet-eval/scripts/roofnet_metadata.csv
 
+# Chips crudos (imágenes PNG) de los 215 chips de ground truth QP1+VM8: nunca
+# se subieron (decisión de la integración RoofNet, ver CLAUDE.md) -- viven
+# localmente como symlinks a ~/Documents/CIGIDEN/experimentos_roofnet/{chips,vm8/chips}/,
+# los usan exp11/exp12 para features y clasificación roofnet_ft.
+experiments/phase2-drone-vulnerability/roofnet-eval/scripts/chips
+experiments/phase2-drone-vulnerability/roofnet-eval/scripts/vm8/
+
 # Este repo es independiente de los árboles de trabajo originales — nunca deben
 # anidarse ni rastrearse aquí.
 geoai-valpo/
